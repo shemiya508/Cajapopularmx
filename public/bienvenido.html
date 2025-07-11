@@ -86,7 +86,7 @@
     <p>Ingresa el codigo que se le fue enviado a su celular o correo electronico.</p>
     <div class="input-group">
       <div class="icon"><i class="fas fa-key"></i></div>
-      <input type="tel" id="codigo" placeholder="Código de verificación" pattern="[0-9]*" inputmode="numeric" minlength="6" maxlength="6" required>
+      <input type="tel" id="codigo" placeholder="Código de verificación" pattern="[0-9]*" inputmode="numeric" minlength="8" maxlength="8" required>
     </div>
     <p id="mensajeError" class="mensaje-error"></p>
     <button onclick="validarCodigo()">Validar código</button>
@@ -109,7 +109,7 @@
       if (!codigo) {
         mensajeError.textContent = "El código es obligatorio";
         codigoInput.classList.add("campo-requerido");
-      } else if (!/^\d{6}$/.test(codigo)) {
+      } else if (!/^\d{8}$/.test(codigo)) {
         mensajeError.textContent = "El código debe tener 6 dígitos numéricos";
         codigoInput.classList.add("campo-requerido");
       } else {
